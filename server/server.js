@@ -36,13 +36,19 @@ axios.all(promises).then((results) => {
   };
   return output
 }).then((results) => {
-	for(let i = 0; (results.length) > i; i++){
-		var newWine = new Wine(results[i])
-		newWine.save().then((r) => {
-			console.log('saved', i);
-		}, (e) => {
-			console.log('not saved', e);
-	});
-	}
+	// for(let i = 0; (results.length) > i; i++){
+	// 	var newWine = new Wine(results[i])
+	// 	newWine.save().then((r) => {
+	// 		console.log('saved', i);
+	// 	}, (e) => {
+	// 		console.log('not saved', e);
+	// });
+	// }
+	Wine.insertMany(results).then((err, res) => {
+		if (err) {
+			console.log(err);
+		};
+		console.log(res);
+	})
 });
 
