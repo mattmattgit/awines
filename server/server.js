@@ -28,15 +28,21 @@ urls.forEach( (singleElement) => {
 });
 
 axios.all(promises).then((results) => {
+	var output = []
   for(let i = 0; (results.length) > i; i++){
 	for(let c = 0; (results[i].length) > c; c++){
-	 	var newWine = new Wine(JSON.parse(results[i][c]));
-    	newWine.save().then((r) => {
-			console.log('saved', i, c);
+	output.push(JSON.parse(results[i][c]));
+	};
+  };
+  return output
+}).then((results) => {
+	for(let i = 0; (results.length) > i; i++){
+		var newWine = new Wine(results[i])
+		newWine.save().then((r) => {
+			console.log('saved', i);
 		}, (e) => {
 			console.log('not saved', e);
 	});
-	};
-  };
+	}
 });
 
